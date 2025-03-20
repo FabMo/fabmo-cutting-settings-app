@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Configuration</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/tips.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <!-- Tool tip stand-in -->
+    <div class="tip-output"><span class="tip-text"></span>
+        <div class='commentBox'></div>
+    </div>
+
+    <div class="sticky">
+        <nav class="top-bar" data-topbar role="navigation">
+            <ul class="title-area">
+                <li class="name">
+                    <h1><a id="app-header">Cutting Settings</a></h1>
+                </li>
+                <li class="toggle-topbar"><a href="#"><span>Menu</span></a>
+                </li>
+            </ul>
+            <section class="top-bar-section">
+                <ul class="left" role="tablist" data-tab>
+                    <li class="tab-title active" role="presentational"><a href="#tabpanel1" role="tab" tabindex="0"
+                            aria-selected="true" controls="tabpanel1">Tool Library</a>
+                    </li>
+                    <li class="tab-title" role="presentational"><a href="#tabpanel2" role="tab" tabindex="0"
+                            aria-selected="false" controls="tabpanel2">Preferences</a>
+                    </li>
+                </ul>
+                <ul class="right">
+                    <li>
+                        <a id="engine-version" class="engine-version" href=""></a>
+                    </li>
+                </ul>
+            </section>
+        </nav>
+    </div>
+
+
+
+    <div class="row">
+        <!--  <form> -->
+
+        <ul class="tabs" data-tab role="tablist">
+
+        </ul>
+        <div class="tabs-content">
+
+            <section role="tabpanel" aria-hidden="false" class="content active" id="tabpanel1">
+                <div class="row">
+                    <div class="large-5 columns">
+                        <fieldset>
+                            <legend>Tool Library</legend>
+                            <div class="large-9 columns">
+                                <div class="row collapse">
+                                    <div class="table-outer">
+                                        <table class="small-12 columns"
+                                            style="width:100%;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif"
+                                            id="toolLibrary">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Description</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>1/4" Downcut</td>
+                                                    <td><a id="btn-Load1" class="button radius small">Load</a></td>
+                                                    <td><a id="btn-Meas1" class="button radius small">Measure</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>3/8" O-Flute Upcut</td>
+                                                    <td><a id="btn-Load2" class="button radius small">Load</a></td>
+                                                    <td><a id="btn-Meas2" class="button radius small">Measure</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>90deg V-Bit</td>
+                                                    <td><a id="btn-Load3" class="button radius small">Load</a></td>
+                                                    <td><a id="btn-Meas3" class="button radius small">Measure</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>1/8" O-Flute Upcut</td>
+                                                    <td><a id="btn-Load4" class="button radius small">Load</a></td>
+                                                    <td><a id="btn-Meas4" class="button radius small">Measure</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>1/4" Upcut</td>
+                                                    <td><a id="btn-Load5" class="button radius small">Load</a></td>
+                                                    <td><a id="btn-Meas5" class="button radius small">Measure</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>1.25" Surfacing Bit</td>
+                                                    <td><a id="btn-Load6" class="button radius small">Load</a></td>
+                                                    <td><a id="btn-Meas6" class="button radius small">Measure</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>Diamond Drag Bit</td>
+                                                    <td><a id="btn-Load7" class="button radius small">Load</a></td>
+                                                    <td><a id="btn-Meas7" class="button radius small">Measure</a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="large-3 columns">
+                                <div class="row collapse">
+                                    <a id="btn-HomeMachine" class="button radius small">Home Machine (C3)</a>
+                                </div>
+                                <div class="row collapse">
+                                    <a id="btn-ZeroZ" class="button radius small">Zero Z Axis (C2)</a>
+                                </div>
+                                <div class="row collapse">
+                                    <a id="btn-Warmup" class="button radius small">Warm Up Spindle (C5)</a>
+                                </div>
+                                <div class="row collapse">
+                                    <a id="btn-SquareGnt" class="button radius small">Square Gantry</a>
+                                </div>
+                                <div class="row collapse">
+                                    <a id="btn-loadDB" class="button radius small">Load Tool Database</a>
+                                </div>
+                            </div>
+                    </div>
+                    </fieldset>
+
+                    <div class="large-2 columns">
+                        <fieldset style="margin-left:0px">
+                            <legend>Current Status</legend>
+                            <div class="large-12 columns">
+                                <div class="row collapse">
+                                    <span id="currentStatus" name="currentStatus"
+                                        style=";font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">
+                                        Bit Loaded: #1 <br> 1/4" Downcut
+                                    </span>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset style="margin-left:0px">
+                            <legend>ATC Setup</legend>
+                            <div class="large-12 columns">
+                                <div class="row collapse">
+                                    <a id="btn-MeasureBits" class="button radius small">Measure Bits (C72)</a>
+                                </div>
+                                <div class="row collapse">
+                                    <a id="btn-PlateOffset" class="button radius small">Get Plate Offset (C73)</a>
+                                </div>
+                                <div class="row collapse">
+                                    <a id="btn-CalibrateToolbar" class="button radius small">Calibrate Toolbar (C74)</a>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="large-5 columns">
+                        <div class="image-container" style="margin-right:100px;">
+                            <img src="./files/DT3 Perspective Aluminum Deck.png" alt="Homing Diagram"
+                                class="homing-image" style="max-height:315px">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section role="tabpanel" class="content" id="tabpanel2">
+                <div class="row">
+                    <div class="large-7 columns">
+                        <fieldset>
+                            <legend>X/Y Homing Settings</legend>
+                            <div class="large-8 columns">
+                                <div class="row collapse">
+                                    <label>X Offset<span class="tooltip tooltip-below">i
+                                            <span class="tooltiptext">How far off your X-axis proximity switch to
+                                                set machine zero for X (default = .5in)</span></span></label>
+                                    <div class="small-12 columns">
+                                        <input type="text" id="xOffset" class="xOffset" />
+                                    </div>
+                                </div>
+                                <div class="row collapse">
+                                    <label>Y Offset<span class="tooltip tooltip-below">i
+                                            <span class="tooltiptext">How far off your Y-axis proximity switch to
+                                                set machine zero for Y (default = .5in)</span></span></label>
+                                    <div class="small-12 columns">
+                                        <input type="text" id="yOffset" class="yOffset" />
+                                    </div>
+                                </div>
+                                <div class="row collapse">
+                                    <label>Homing Speeds<span class="tooltip tooltip-below">i
+                                            <span class="tooltiptext">How fast will your tool initially run towards
+                                                machine zero in X and Y (typically 2.5ips)</span></span></label>
+                                    <div class="small-12 columns">
+                                        <input type="text" id="yOffset" class="yOffset" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="large-4 columns">
+                                <div class="row collapse">
+                                    <a id="btn-setHome" class="button radius small">Set Current Location as Home
+                                        Position</a>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="large-5 columns">
+                        <div class="image-container" style="margin-right:100px;">
+                            <img src="./files/DT3 Perspective Aluminum Deck.png" alt="Homing Diagram"
+                                class="homing-image" style="max-height:315px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-9 columns">
+                        <fieldset>
+                            <legend>Z Zero Settings</legend>
+                            <div class="large-6 columns">
+                                <div class="row collapse">
+                                    <label>Z plate thickness<span class="tooltip tooltip-below">i
+                                            <span class="tooltiptext">The true thickness of your z-zero plate
+                                                (typically .118 for Standard ShopBot Plate)</span></span></label>
+                                    <div class="small-12 columns">
+                                        <input type="text" id="plateThick" class="plateThick" />
+                                    </div>
+                                </div>
+                                <div class="row collapse">
+                                    <label>Z homing speed<span class="tooltip tooltip-below">i
+                                            <span class="tooltiptext">The initial rate your toolhead will approach
+                                                the z-zero plate (typically 0.5ips)</span></span></label>
+                                    <div class="small-12 columns">
+                                        <input type="text" id="zHomeSpeed" class="zHomeSpeed" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="large-6 columns">
+                                <div class="row collapse">
+                                    <label>Use Fixed Z Zero Location<span class="tooltip tooltip-below">i<span
+                                                class="tooltiptext">Checking this box will cause your machine to
+                                                automatically move to the specified location for all z zero
+                                                measurements</span></span></label>
+                                    <input id="fixedZZLoc" class="machine-input" type="checkbox" unchecked>
+                                </div>
+                                <div class="row collapse">
+                                    <label>X Location<span class="tooltip tooltip-below">i
+                                            <span class="tooltiptext">The X location that your machine will
+                                                automatically move to for z zero measurements</span></span></label>
+                                    <div class="small-12 columns">
+                                        <input type="text" id="zzXLoc" class="zzXLoc" />
+                                    </div>
+                                </div>
+                                <div class="row collapse">
+                                    <label>Y Location<span class="tooltip tooltip-below">i
+                                            <span class="tooltiptext">The Y location that your machine will
+                                                automatically move to for z zero measurements</span></span></label>
+                                    <div class="small-12 columns">
+                                        <input type="text" id="zzYLoc" class="zzYLoc" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-9 columns">
+                        <fieldset>
+                            <legend>Toolchange Settings (MTC)</legend>
+                            <div class="large-6 columns">
+                                <div class="row collapse">
+                                    <label>Ignore Toolchanges<span class="tooltip tooltip-below">i<span
+                                                class="tooltiptext">Checking this box will cause your machine skip
+                                                all toolchanges encountered in the file</span></span></label>
+                                    <input id="mtcNoChg" class="machine-input" type="checkbox" unchecked>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/fabmo.js"></script>
+    <script src="./js/cut_settings.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
