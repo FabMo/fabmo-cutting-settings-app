@@ -36,13 +36,13 @@
 /* Tooltip elements */
 
 .tooltip {
-  background-color: #313366;
-  float: right;
+  background-color: #bdbdbd90;
+  float: none;
   border-radius: 50%;
   height: 20px;
   width: 20px;
   line-height: 130%;
-  color: #eee;
+  color: #eeeeeeee;
   text-align: center;
   font-size: 1rem;
   font-family: serif;

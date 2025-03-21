@@ -52,11 +52,33 @@
 
         </ul>
         <div class="tabs-content">
-
             <section role="tabpanel" aria-hidden="false" class="content active" id="tabpanel1">
+                <div class="large-4 columns" style="float:right">
+                    <div class="image-container">
+                        <img id="machineImage1" alt="Homing Diagram" class="homing-image"
+                            style="max-height:315px">
+                    </div>
+                </div>
                 <div class="row">
-                    <div class="large-5 columns">
-                        <fieldset>
+                    <div class="large-5 columns" style="margin-right:-20px">
+                        <!--
+                        <fieldset style="min-width:475px">
+                            <legend>Startup Functions</legend>
+                            <div class="large-12 columns">
+                                <a id="btn-HomeMachine" class="button radius small" style="width:175px; margin:2px">Home
+                                    Machine (C3)</a>
+                                <a id="btn-ZeroZ" class="button radius small" style="width:175px; margin:2px">Zero Z
+                                    Axis (C2)</a>
+                                <a id="btn-Warmup" class="button radius small" style="width:175px; margin:2px">Spindle
+                                    Warmup</a>
+                                <a id="btn-SquareGnt" class="button radius small" style="width:175px; margin:2px">Square
+                                    Gantry</a>
+                                <a id="btn-loadDB" class="button radius small" style="width:175px; margin:2px">Load Tool
+                                    Database</a>
+                            </div>
+                        </fieldset>
+                        -->
+                        <fieldset style="min-width:475px">
                             <legend>Tool Library</legend>
                             <div class="large-9 columns">
                                 <div class="row collapse">
@@ -67,81 +89,26 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Description</th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    <th style="min-width:200px">Description<span class="tooltip tooltip-below">i
+                                                        <span class="tooltiptext">Add a description for your bits by typing into the text fields below</span></span></th>
+                                                    <th><span class="tooltip tooltip-below">i
+                                                        <span class="tooltiptext">Click the "Load" button next to a tool you want to load into your spindle</span></span></th>
+                                                    <th><span class="tooltip tooltip-below">i
+                                                        <span class="tooltiptext">Click the "Measure" button next to a tool that you want to record a length for</span></span></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>1/4" Downcut</td>
-                                                    <td><a id="btn-Load1" class="button radius small">Load</a></td>
-                                                    <td><a id="btn-Meas1" class="button radius small">Measure</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>3/8" O-Flute Upcut</td>
-                                                    <td><a id="btn-Load2" class="button radius small">Load</a></td>
-                                                    <td><a id="btn-Meas2" class="button radius small">Measure</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>90deg V-Bit</td>
-                                                    <td><a id="btn-Load3" class="button radius small">Load</a></td>
-                                                    <td><a id="btn-Meas3" class="button radius small">Measure</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>1/8" O-Flute Upcut</td>
-                                                    <td><a id="btn-Load4" class="button radius small">Load</a></td>
-                                                    <td><a id="btn-Meas4" class="button radius small">Measure</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>1/4" Upcut</td>
-                                                    <td><a id="btn-Load5" class="button radius small">Load</a></td>
-                                                    <td><a id="btn-Meas5" class="button radius small">Measure</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>1.25" Surfacing Bit</td>
-                                                    <td><a id="btn-Load6" class="button radius small">Load</a></td>
-                                                    <td><a id="btn-Meas6" class="button radius small">Measure</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>7</td>
-                                                    <td>Diamond Drag Bit</td>
-                                                    <td><a id="btn-Load7" class="button radius small">Load</a></td>
-                                                    <td><a id="btn-Meas7" class="button radius small">Measure</a></td>
-                                                </tr>
+                                                <!-- Tools appear here -->
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="large-3 columns">
-                                <div class="row collapse">
-                                    <a id="btn-HomeMachine" class="button radius small">Home Machine (C3)</a>
-                                </div>
-                                <div class="row collapse">
-                                    <a id="btn-ZeroZ" class="button radius small">Zero Z Axis (C2)</a>
-                                </div>
-                                <div class="row collapse">
-                                    <a id="btn-Warmup" class="button radius small">Warm Up Spindle (C5)</a>
-                                </div>
-                                <div class="row collapse">
-                                    <a id="btn-SquareGnt" class="button radius small">Square Gantry</a>
-                                </div>
-                                <div class="row collapse">
-                                    <a id="btn-loadDB" class="button radius small">Load Tool Database</a>
-                                </div>
-                            </div>
+                        </fieldset>
                     </div>
-                    </fieldset>
 
-                    <div class="large-2 columns">
-                        <fieldset style="margin-left:0px">
+                    <div class="large-2 columns" style="margin-left:-20px; min-width:350px">
+                        <fieldset style="min-width:270px">
                             <legend>Current Status</legend>
                             <div class="large-12 columns">
                                 <div class="row collapse">
@@ -152,26 +119,23 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset style="margin-left:0px">
+                        <fieldset style="min-width:270px">
                             <legend>ATC Setup</legend>
                             <div class="large-12 columns">
                                 <div class="row collapse">
-                                    <a id="btn-MeasureBits" class="button radius small">Measure Bits (C72)</a>
+                                    <a id="btn-MeasureBits" class="button radius small"
+                                        style="width:175px; margin:4px">Measure Bits (C72)</a>
                                 </div>
                                 <div class="row collapse">
-                                    <a id="btn-PlateOffset" class="button radius small">Get Plate Offset (C73)</a>
+                                    <a id="btn-PlateOffset" class="button radius small"
+                                        style="width:175px; margin:4px">Get Plate Offset (C73)</a>
                                 </div>
                                 <div class="row collapse">
-                                    <a id="btn-CalibrateToolbar" class="button radius small">Calibrate Toolbar (C74)</a>
+                                    <a id="btn-CalibrateToolbar" class="button radius small"
+                                        style="width:175px; margin:4px">Calibrate Toolbar (C74)</a>
                                 </div>
                             </div>
                         </fieldset>
-                    </div>
-                    <div class="large-5 columns">
-                        <div class="image-container" style="margin-right:100px;">
-                            <img src="./files/DT3 Perspective Aluminum Deck.png" alt="Homing Diagram"
-                                class="homing-image" style="max-height:315px">
-                        </div>
                     </div>
                 </div>
             </section>
@@ -209,7 +173,8 @@
                             </div>
                             <div class="large-4 columns">
                                 <div class="row collapse">
-                                    <a id="btn-setHome" class="button radius small">Set Current Location as Home
+                                    <a id="btn-setHome" class="button radius small"><span class="tooltip tooltip-below" style="float:right;margin-right:-15px">i
+                                        <span class="tooltiptext">Runs limit switch setup routine to set home position to current location</span></span>Set Current Location as Home
                                         Position</a>
                                 </div>
                             </div>
@@ -217,7 +182,7 @@
                     </div>
                     <div class="large-5 columns">
                         <div class="image-container" style="margin-right:100px;">
-                            <img src="./files/DT3 Perspective Aluminum Deck.png" alt="Homing Diagram"
+                            <img id="machineImage2" alt="Homing Diagram"
                                 class="homing-image" style="max-height:315px">
                         </div>
                     </div>
@@ -247,18 +212,17 @@
                             </div>
                             <div class="large-6 columns">
                                 <div class="row collapse">
-                                    <label>Use Fixed Z Zero Location<span class="tooltip tooltip-below">i<span
+                                    <label><input id="fixedZZLoc" class="machine-input" type="checkbox" unchecked> Use Fixed Z Zero Location<span class="tooltip tooltip-below">i<span
                                                 class="tooltiptext">Checking this box will cause your machine to
                                                 automatically move to the specified location for all z zero
                                                 measurements</span></span></label>
-                                    <input id="fixedZZLoc" class="machine-input" type="checkbox" unchecked>
                                 </div>
                                 <div class="row collapse">
                                     <label>X Location<span class="tooltip tooltip-below">i
                                             <span class="tooltiptext">The X location that your machine will
                                                 automatically move to for z zero measurements</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="zzXLoc" class="zzXLoc" />
+                                        <input disabled type="text" id="zzXLoc" class="zzXLoc" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -266,7 +230,7 @@
                                             <span class="tooltiptext">The Y location that your machine will
                                                 automatically move to for z zero measurements</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="zzYLoc" class="zzYLoc" />
+                                        <input disabled type="text" id="zzYLoc" class="zzYLoc" />
                                     </div>
                                 </div>
                             </div>
@@ -279,10 +243,9 @@
                             <legend>Toolchange Settings (MTC)</legend>
                             <div class="large-6 columns">
                                 <div class="row collapse">
-                                    <label>Ignore Toolchanges<span class="tooltip tooltip-below">i<span
+                                    <label><input id="mtcNoChg" class="machine-input" type="checkbox" unchecked> Ignore Toolchanges<span class="tooltip tooltip-below">i<span
                                                 class="tooltiptext">Checking this box will cause your machine skip
                                                 all toolchanges encountered in the file</span></span></label>
-                                    <input id="mtcNoChg" class="machine-input" type="checkbox" unchecked>
                                 </div>
                             </div>
                         </fieldset>

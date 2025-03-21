@@ -129,8 +129,7 @@ $('#btn-SquareGnt').click(function(){
 });
 
 $('#btn-MeasureBits').click(function(){
-  fabmo.runSBP('&tool = 0');
-  fabmo.runSBP('C72');
+  fabmo.runSBP('&tool = 0 \n C72');
 });
 
 $('#btn-PlateOffset').click(function(){

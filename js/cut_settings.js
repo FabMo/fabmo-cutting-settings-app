@@ -24,6 +24,90 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("nav ul.left li.active a").click();
 });
 
+var variables = {};
+variables['ATC'] = {};
+variables['TOOLS'] = {};
+
+variables['ATC']['TOOLIN'] = 4;
+variables['TOOLS'][1] = { 'Name': '1/4" Downcut' };
+variables['TOOLS'][2] = { 'Name': '3/8" O-Flute Upcut' };
+variables['TOOLS'][3] = { 'Name': '90deg V-Bit' };
+variables['TOOLS'][4] = { 'Name': '1/8" O-Flute Upcut' };
+variables['TOOLS'][5] = { 'Name': '1/4" Upcut' };
+variables['TOOLS'][6] = { 'Name': '1.25" Surfacing Bit' };
+variables['TOOLS'][7] = { 'Name': 'Diamond Drag Bit' };
+
+if(variables['ATC']['TOOLIN']){
+    var toolIn = variables['ATC']['TOOLIN']
+    var toolDescription = variables['TOOLS'][toolIn]['Name']
+    var toolStatus = 'Bit Loaded: ' + toolIn + '<br>' + toolDescription
+    $('#currentStatus').html(toolStatus)
+}
+
+$.each(variables['TOOLS'], function (toolNumber, toolData) {
+    var safeValue = escapeHtmlAttr(toolData.Name) || '';
+    var row = `
+    <tr>
+        <td>${toolNumber}</td>
+        <td><input class="tool-description" data-tool="${toolNumber}" type="text" value="${safeValue}"></td>
+        <td><a class="button radius small tool-load" style="padding:10px" data-tool="${toolNumber}">Load</a></td>
+        <td><a class="button radius small tool-measure" style="padding:10px" data-tool="${toolNumber}">Measure</a></td>
+    </tr>
+    `;
+    $('#toolLibrary tbody').append(row);
+});
+
+function escapeHtmlAttr(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+$('#toolLibrary').on('change', '.tool-description', function(e) {
+    var toolNumber = $(this).data('tool');
+    var newDescription = escapeHtmlAttr($(this).val())
+    console.log('$ATC.TOOLS[' + toolNumber + '].Name =' + newDescription)
+    fabmo.runSBP('$ATC.TOOLS[' + toolNumber + '].Name =' + newDescription);
+    $(this).addClass("flash-green");
+    setTimeout(function(){$(this).removeClass("flash-green")},500);
+});
+
+$('#toolLibrary').on('click', '.tool-load', function() {
+    var toolNumber = $(this).data('tool');
+    console.log('running &tool = ' + toolNumber + ' \n C9')
+    fabmo.runSBP('&tool = ' + toolNumber + ' \n C9');
+});
+
+$('#toolLibrary').on('click', '.tool-measure', function() {
+    var toolNumber = $(this).data('tool');
+    console.log('running &tool = ' + toolNumber + ' \n C72')
+    fabmo.runSBP('&tool = ' + toolNumber + ' \n C72');
+});
+
+var machineType = 'ShopBot Desktop ATC'
+
+var imageDir = './files/' + machineType + '.png'
+$('#machineImage1').attr('src', imageDir)
+$('#machineImage2').attr('src', imageDir)
+
+$('#fixedZZLoc').on('change', function (e) {
+    if ($('#fixedZZLoc').prop('checked')) {
+        $('#zzXLoc').prop('disabled', false);
+        $('#zzYLoc').prop('disabled', false);
+    } else {
+        $('#zzXLoc').prop('disabled', true);
+        $('#zzYLoc').prop('disabled', true);
+    }
+})
+
+$('#xOffset').on('change', function(e){
+    $('#xOffset').addClass("flash-green");
+    setTimeout(function(){$('#xOffset').removeClass("flash-green")},500);
+})
+
 var fabmo = new FabMoDashboard();
 console.log(fabmo)
 
