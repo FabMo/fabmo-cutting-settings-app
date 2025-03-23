@@ -4,7 +4,7 @@
 <head>
     <title>Configuration</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/tips.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -151,7 +151,7 @@
                                             <span class="tooltiptext">How far off your X-axis proximity switch to
                                                 set machine zero for X (default = .5in)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="xOffset" class="xOffset" />
+                                        <input type="text" id="xOffset" class="xOffset" data-address="opensbp.variables.SB_HOMEOFF_X" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -159,7 +159,7 @@
                                             <span class="tooltiptext">How far off your Y-axis proximity switch to
                                                 set machine zero for Y (default = .5in)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="yOffset" class="yOffset" />
+                                        <input type="text" id="yOffset" class="yOffset" data-address="opensbp.variables.SB_HOMEOFF_Y"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -167,7 +167,7 @@
                                             <span class="tooltiptext">How fast will your tool initially run towards
                                                 machine zero in X and Y (typically 2.5ips)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="yOffset" class="yOffset" />
+                                        <input type="text" id="homingSpeeds" class="homingSpeeds" data-address="opensbp.variables.SB_SEARCHSPEED_XY" />
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                                             <span class="tooltiptext">The true thickness of your z-zero plate
                                                 (typically .118 for Standard ShopBot Plate)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="plateThick" class="plateThick" />
+                                        <input type="text" id="plateThick" class="plateThick" data-address="opensbp.variables.SB_ZPLATETHICK" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -206,7 +206,7 @@
                                             <span class="tooltiptext">The initial rate your toolhead will approach
                                                 the z-zero plate (typically 0.5ips)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="zHomeSpeed" class="zHomeSpeed" />
+                                        <input type="text" id="zHomeSpeed" class="zHomeSpeed" data-address="opensbp.variables.SB_SEARCHSPEED_Z" />
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +257,6 @@
     <script src="./js/jquery.min.js"></script>
     <script src="./js/fabmo.js"></script>
     <script src="./js/cut_settings.js"></script>
-    <script src="./js/main.js"></script>
 </body>
 
 </html>
