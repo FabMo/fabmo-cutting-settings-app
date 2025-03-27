@@ -53,14 +53,8 @@
         </ul>
         <div class="tabs-content">
             <section role="tabpanel" aria-hidden="false" class="content active" id="tabpanel1">
-                <div class="large-4 columns" style="float:right">
-                    <div class="image-container">
-                        <img id="machineImage1" alt="Homing Diagram" class="homing-image"
-                            style="max-height:315px">
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="large-5 columns" style="margin-right:-20px">
+                    <div class="large-6 columns" style="margin-right:-20px">
                         <!--
                         <fieldset style="min-width:475px">
                             <legend>Startup Functions</legend>
@@ -79,61 +73,85 @@
                         </fieldset>
                         -->
                         <fieldset style="min-width:475px">
-                            <legend>Tool Library</legend>
-                            <div class="large-9 columns">
+                            <legend id="currentStatus">Tool Library</legend>
+                            <div class="large-8 columns">
                                 <div class="row collapse">
                                     <div class="table-outer">
+                                        <div id="toolPopupBar"
+                                            style="display:none; padding:10px; background:#f2f2f2; border:1px solid #ccc; margin-bottom:10px;">
+                                            <label for="newToolNumber" style="margin-right:10px;">Enter New Tool
+                                                Number:</label>
+                                            <input type="number" id="newToolNumber" style="width:80px;">
+                                            <button id="confirmAddTool" class="button tiny success">Add</button>
+                                            <button id="cancelAddTool" class="button tiny alert">Cancel</button>
+                                        </div>
                                         <table class="small-12 columns"
                                             style="width:100%;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif"
                                             id="toolLibrary">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th style="min-width:200px">Description<span class="tooltip tooltip-below">i
-                                                        <span class="tooltiptext">Add a description for your bits by typing into the text fields below</span></span></th>
+                                                    <th style="min-width:200px">Description<span
+                                                            class="tooltip tooltip-below">i
+                                                            <span class="tooltiptext">Add a description for your bits by
+                                                                typing into the text fields below</span></span></th>
                                                     <th><span class="tooltip tooltip-below">i
-                                                        <span class="tooltiptext">Click the "Load" button next to a tool you want to load into your spindle</span></span></th>
+                                                            <span class="tooltiptext">Click the "Load" button next to a
+                                                                tool you want to load into your spindle</span></span>
+                                                    </th>
                                                     <th><span class="tooltip tooltip-below">i
-                                                        <span class="tooltiptext">Click the "Measure" button next to a tool that you want to record a length for</span></span></th>
+                                                            <span class="tooltiptext">Click the "Measure" button next to
+                                                                a tool that you want to record a length
+                                                                for</span></span></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- Tools appear here -->
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <button id="addToolBtn" class="button small">➕ Add Tool</button>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="large-2 columns" style="margin-left:-20px; min-width:350px">
-                        <fieldset style="min-width:270px">
-                            <legend>Current Status</legend>
-                            <div class="large-12 columns">
-                                <div class="row collapse">
-                                    <span id="currentStatus" name="currentStatus"
-                                        style=";font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">
-                                        Bit Loaded: #1 <br> 1/4" Downcut
-                                    </span>
+                            <div class="large-4 columns">
+                                <div class="image-container">
+                                    <img id="machineImage1" alt="Homing Diagram" class="homing-image"
+                                        style="max-height:315px">
                                 </div>
-                            </div>
-                        </fieldset>
-                        <fieldset style="min-width:270px">
-                            <legend>ATC Setup</legend>
-                            <div class="large-12 columns">
-                                <div class="row collapse">
-                                    <a id="btn-MeasureBits" class="button radius small"
-                                        style="width:175px; margin:4px">Measure Bits (C72)</a>
-                                </div>
-                                <div class="row collapse">
-                                    <a id="btn-PlateOffset" class="button radius small"
-                                        style="width:175px; margin:4px">Get Plate Offset (C73)</a>
-                                </div>
-                                <div class="row collapse">
-                                    <a id="btn-CalibrateToolbar" class="button radius small"
-                                        style="width:175px; margin:4px">Calibrate Toolbar (C74)</a>
-                                </div>
+                                <fieldset style="min-width:270px" hidden id="atcSetup">
+                                    <legend>ATC Setup</legend>
+                                    <div class="large-12 columns">
+                                        <div class="row collapse">
+                                            <a id="btn-MeasureBits" class="button radius small"
+                                                style="width:175px; margin:4px"><span class="tooltip tooltip-below"
+                                                    style="float:right;margin-right:-15px">i
+                                                    <span class="tooltiptext">Automatically measure all bits on your
+                                                        toolbar</span></span>Measure Bits (C72)</a>
+                                        </div>
+                                        <div class="row collapse">
+                                            <a id="btn-PlateOffset" class="button radius small"
+                                                style="width:175px; margin:4px"><span class="tooltip tooltip-below"
+                                                    style="float:right;margin-right:-15px">i
+                                                    <span class="tooltiptext">Record offset between your fixed z zero
+                                                        plate and
+                                                        your table surface</span></span>Get Plate Offset (C73)</a>
+                                        </div>
+                                        <div class="row collapse">
+                                            <a id="btn-CalibrateToolbar" class="button radius small"
+                                                style="width:175px; margin:4px"><span class="tooltip tooltip-below"
+                                                    style="float:right;margin-right:-15px">i
+                                                    <span class="tooltiptext">Automatically set up tool clip locations
+                                                        on your
+                                                        toolbar</span></span>Calibrate Toolbar (C74)</a>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </fieldset>
                     </div>
@@ -151,7 +169,8 @@
                                             <span class="tooltiptext">How far off your X-axis proximity switch to
                                                 set machine zero for X (default = .5in)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="xOffset" class="xOffset" data-address="opensbp.variables.SB_HOMEOFF_X" />
+                                        <input type="text" id="xOffset" class="xOffset"
+                                            data-address="opensbp.variables.SB_HOMEOFF_X" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -159,7 +178,8 @@
                                             <span class="tooltiptext">How far off your Y-axis proximity switch to
                                                 set machine zero for Y (default = .5in)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="yOffset" class="yOffset" data-address="opensbp.variables.SB_HOMEOFF_Y"/>
+                                        <input type="text" id="yOffset" class="yOffset"
+                                            data-address="opensbp.variables.SB_HOMEOFF_Y" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -167,14 +187,17 @@
                                             <span class="tooltiptext">How fast will your tool initially run towards
                                                 machine zero in X and Y (typically 2.5ips)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="homingSpeeds" class="homingSpeeds" data-address="opensbp.variables.SB_SEARCHSPEED_XY" />
+                                        <input type="text" id="homingSpeeds" class="homingSpeeds"
+                                            data-address="opensbp.variables.SB_SEARCHSPEED_XY" />
                                     </div>
                                 </div>
                             </div>
                             <div class="large-4 columns">
                                 <div class="row collapse">
-                                    <a id="btn-setHome" class="button radius small"><span class="tooltip tooltip-below" style="float:right;margin-right:-15px">i
-                                        <span class="tooltiptext">Runs limit switch setup routine to set home position to current location</span></span>Set Current Location as Home
+                                    <a id="btn-setHome" class="button radius small"><span class="tooltip tooltip-below"
+                                            style="float:right;margin-right:-15px">i
+                                            <span class="tooltiptext">Runs limit switch setup routine to set home
+                                                position to current location</span></span>Set Current Location as Home
                                         Position</a>
                                 </div>
                             </div>
@@ -182,8 +205,7 @@
                     </div>
                     <div class="large-5 columns">
                         <div class="image-container" style="margin-right:100px;">
-                            <img id="machineImage2" alt="Homing Diagram"
-                                class="homing-image" style="max-height:315px">
+                            <img id="machineImage2" alt="Homing Diagram" class="homing-image" style="max-height:315px">
                         </div>
                     </div>
                 </div>
@@ -198,7 +220,8 @@
                                             <span class="tooltiptext">The true thickness of your z-zero plate
                                                 (typically .118 for Standard ShopBot Plate)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="plateThick" class="plateThick" data-address="opensbp.variables.SB_ZPLATETHICK" />
+                                        <input type="text" id="plateThick" class="plateThick"
+                                            data-address="opensbp.variables.SB_ZPLATETHICK" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -206,13 +229,16 @@
                                             <span class="tooltiptext">The initial rate your toolhead will approach
                                                 the z-zero plate (typically 0.5ips)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="zHomeSpeed" class="zHomeSpeed" data-address="opensbp.variables.SB_SEARCHSPEED_Z" />
+                                        <input type="text" id="zHomeSpeed" class="zHomeSpeed"
+                                            data-address="opensbp.variables.SB_SEARCHSPEED_Z" />
                                     </div>
                                 </div>
                             </div>
                             <div class="large-6 columns">
                                 <div class="row collapse">
-                                    <label><input id="fixedZZLoc" class="machine-input" type="checkbox" unchecked> Use Fixed Z Zero Location<span class="tooltip tooltip-below">i<span
+                                    <label><input id="sb_useZZeroLoc" class="machine-input" type="checkbox" unchecked
+                                            data-address="opensbp.variables.SB_USEZZEROLOC"> Use
+                                        Fixed Z Zero Location<span class="tooltip tooltip-below">i<span
                                                 class="tooltiptext">Checking this box will cause your machine to
                                                 automatically move to the specified location for all z zero
                                                 measurements</span></span></label>
@@ -222,7 +248,8 @@
                                             <span class="tooltiptext">The X location that your machine will
                                                 automatically move to for z zero measurements</span></span></label>
                                     <div class="small-12 columns">
-                                        <input disabled type="text" id="zzXLoc" class="zzXLoc" />
+                                        <input disabled type="text" id="sb_zZeroLocX " class="sb_zZeroLocX "
+                                            data-address="opensbp.variables.SB_ZZEROLOCX" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -230,7 +257,8 @@
                                             <span class="tooltiptext">The Y location that your machine will
                                                 automatically move to for z zero measurements</span></span></label>
                                     <div class="small-12 columns">
-                                        <input disabled type="text" id="zzYLoc" class="zzYLoc" />
+                                        <input disabled type="text" id="sb_zZeroLocY " class="sb_zZeroLocY "
+                                            data-address="opensbp.variables.SB_ZZEROLOCY" />
                                     </div>
                                 </div>
                             </div>
@@ -239,13 +267,28 @@
                 </div>
                 <div class="row">
                     <div class="large-9 columns">
-                        <fieldset>
+                        <fieldset hidden id="mtcChangeSettings" hidden>
                             <legend>Toolchange Settings (MTC)</legend>
                             <div class="large-6 columns">
                                 <div class="row collapse">
-                                    <label><input id="mtcNoChg" class="machine-input" type="checkbox" unchecked> Ignore Toolchanges<span class="tooltip tooltip-below">i<span
+                                    <label><input id="mtcNoChg" class="machine-input" type="checkbox" unchecked> Ignore
+                                        Toolchanges<span class="tooltip tooltip-below">i<span
                                                 class="tooltiptext">Checking this box will cause your machine skip
                                                 all toolchanges encountered in the file</span></span></label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset hidden id="atcChangeSettings" hidden>
+                            <legend>Toolchange Settings (ATC)</legend>
+                            <div class="large-6 columns">
+                                <div class="row collapse">
+                                    <label><input id="atcNoChg" class="machine-input" type="checkbox" unchecked> Ignore
+                                        Toolchanges<span class="tooltip tooltip-below">i<span
+                                                class="tooltiptext">Checking this box will cause your machine skip
+                                                all toolchanges encountered in the file</span></span></label>
+                                    <label><input id="atcSemiAuto" class="machine-input" type="checkbox" unchecked> Semi-Auto
+                                        Toolchanges<span class="tooltip tooltip-below">i<span
+                                                class="tooltiptext">Checking this box will cause the machine to stop and request the user to manually insert the tool holder when a toolchange is called, bit lengths will still be automatically set.</span></span></label>
                                 </div>
                             </div>
                         </fieldset>

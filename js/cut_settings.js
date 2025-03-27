@@ -26,53 +26,93 @@ document.addEventListener("DOMContentLoaded", function () {
 
 var fabmo = new FabMoDashboard();
 
-fabmo.getConfig(function (err, data) {
-    if (err) {
-        console.error(err)
-    } else {
-        $('[data-address]').each(function () {
-            const address = $(this).data('address');
-            const value = getValueByAddress(data, address);
-            if (value !== undefined) {
-                $(this).val(value);
-            }
-        });
-        var variables = data.opensbp.variables;
-        populateToolLibrary(variables);
-        updateStatus(variables);
-        console.log("Machine Profile is " + data.engine.profile)
-        var machineType = data.engine.profile
+var variables = {}
 
-        var imageDir = './files/' + machineType + '.jpg'
-        console.log (imageDir)
-        $('#machineImage1').attr('src', imageDir)
-        $('#machineImage2').attr('src', imageDir)
+updateStoredConfig(function (data) {
+    var variables = data.opensbp.variables
+    console.log(variables)
+    populateToolLibrary();
+    updateStatus();
+    console.log("Machine Profile is " + data.engine.profile)
+    var machineType = data.engine.profile
+    if (machineType == 'ShopBot Desktop ATC'){
+        document.getElementById('atcSetup').removeAttribute('hidden');
+        document.getElementById('atcChangeSettings').removeAttribute('hidden');
+    }
+    if (machineType == 'ShopBot Desktop' || machineType == 'ShopBot Desktop Max'){
+        document.getElementById('mtcChangeSettings').removeAttribute('hidden');
+    }
+    var imageDir = './files/' + machineType + '.jpg'
+    console.log(imageDir)
+    $('#machineImage1').attr('src', imageDir)
+    $('#machineImage2').attr('src', imageDir)
+    var variableInitCode = ''
+    if (!variables['$sb_useZZeroLoc']) {
+        variableInitCode += '$sb_useZZeroLoc = 0 \n '
+    }
+    if (!variables['$sb_zZeroLocX']) {
+        variableInitCode += '$sb_zZeroLocX = 0 \n '
+    }
+    if (!variables['$sb_zZeroLocY']) {
+        variableInitCode += '$sb_zZeroLocY = 0 \n '
+    }
+    if (variableInitCode != '') {
+        fabmo.runSBP(variableInitCode);
     }
 })
+
+function updateStoredConfig(callback) {
+    fabmo.getConfig(function (err, data) {
+        if (err) {
+            console.error(err)
+        } else {
+            $('[data-address]').each(function () {
+                const address = $(this).data('address');
+                console.log(address)
+                const value = getValueByAddress(data, address);
+                console.log(value)
+                if (value !== undefined) {
+                    $(this).val(value);
+                }
+            });
+            console.log('updated vars')
+            console.log(data.opensbp.variables)
+            callback(data);
+        }
+
+    })
+}
 
 function getValueByAddress(obj, address) {
     return address.split('.').reduce((o, key) => (o ? o[key] : undefined), obj);
 }
 
-function updateStatus(variables) {
-    if (variables['ATC']['TOOLIN']) {
-        var toolIn = variables['ATC']['TOOLIN']
-        var toolDescription = variables['TOOLS'][toolIn]['NAME']
-        console.log('tooldesc = ' + toolDescription)
-        if (toolDescription == undefined) { toolDescription = '' }
-        var toolStatus = 'Bit Loaded: ' + toolIn + '<br>' + toolDescription
-        $('#currentStatus').html(toolStatus)
-    }
+function updateStatus() {
+    updateStoredConfig(function (data) {
+        var variables = data.opensbp.variables
+        console.log(variables)
+        if (variables['ATC']['TOOLIN']) {
+            var toolIn = variables['ATC']['TOOLIN']
+            var toolDescription = variables['TOOLS'][toolIn]['NAME']
+            console.log('tooldesc = ' + toolDescription)
+            if (toolDescription == undefined) { toolDescription = '' }
+            var toolStatus = 'Tool Libary - Current Bit: ' + toolIn + '; ' + toolDescription
+            $('#currentStatus').html(toolStatus)
+        }
+    })
 }
 
-function populateToolLibrary(variables) {
-    console.log(variables)
-    if(variables['TOOLS']){
-    $.each(variables['TOOLS'], function (toolNumber, toolData) {
-        var safeValue = escapeHtmlAttr(toolData.NAME) || '';
-        if (safeValue == 'undefined') { safeValue = 'Enter Tool Description...' }
-        if (toolNumber == 0) { safeValue = 'Empty' }
-        var row = `
+function populateToolLibrary() {
+    updateStoredConfig(function (data) {
+        var variables = data.opensbp.variables
+        console.log(variables)
+        if (variables['TOOLS']) {
+            $.each(variables['TOOLS'], function (toolNumber, toolData) {
+
+                var safeValue = escapeHtmlAttr(toolData.NAME) || '';
+                if (safeValue == 'undefined') { safeValue = 'Enter Tool Description...' }
+                if (toolNumber == 0) { safeValue = 'Empty' }
+                var row = `
     <tr>
         <td>${toolNumber}</td>
         <td><input class="tool-description" data-tool="${toolNumber}" type="text" value="${safeValue}"></td>
@@ -80,9 +120,10 @@ function populateToolLibrary(variables) {
         <td><a class="button radius small tool-measure" style="padding:10px" data-tool="${toolNumber}">Measure</a></td>
     </tr>
     `;
-        $('#toolLibrary tbody').append(row);
-    });
-}
+                $('#toolLibrary tbody').append(row);
+            });
+        }
+    })
 }
 
 function escapeHtmlAttr(str) {
@@ -95,18 +136,32 @@ function escapeHtmlAttr(str) {
 }
 
 $('#toolLibrary').on('change', '.tool-description', function (e) {
-    var toolNumber = $(this).data('tool');
-    var newDescription = escapeHtmlAttr($(this).val())
-    console.log('$TOOLS[' + toolNumber + '].NAME =' + newDescription)
-    if (newDescription != undefined){
-        if(newDescription.length > 0){
-    fabmo.runSBP('$TOOLS[' + toolNumber + '].NAME = "' + newDescription + '"');
-    $(this).addClass("flash-green");
-    setTimeout(function () { $(this).removeClass("flash-green") }, 500);
-    updateStatus()}} else {
-        $(this).addClass("flash-red");
-    setTimeout(function () { $(this).removeClass("flash-red") }, 500);
-    }
+    const $input = $(this);
+    updateStoredConfig(function (data) {
+        var variables = data.opensbp.variables
+        console.log(variables)
+        var toolNumber = $input.data('tool');
+        var newDescription = escapeHtmlAttr($input.val())
+        console.log('$TOOLS[' + toolNumber + '].NAME =' + newDescription)
+        if (newDescription != undefined) {
+            if (newDescription.length > 0) {
+                var sbp = '$TOOLS[' + toolNumber + '].NAME = "' + newDescription + '" '
+                if (!variables[toolNumber]) {
+                    sbp += '\n $TOOLS[' + toolNumber + '].H = -5.000'
+                    sbp += '\n $TOOLS[' + toolNumber + '].X = 0'
+                    sbp += '\n $TOOLS[' + toolNumber + '].Y = 0'
+                    sbp += '\n $TOOLS[' + toolNumber + '].Z = 0'
+                }
+                fabmo.runSBP(sbp);
+                $input.addClass("flash-green");
+                setTimeout(function () { $input.removeClass("flash-green") }, 500);
+                updateStatus()
+            }
+        } else {
+            $input.addClass("flash-red");
+            setTimeout(function () { $input.removeClass("flash-red") }, 500);
+        }
+    })
 });
 
 $('#toolLibrary').on('click', '.tool-load', function () {
@@ -120,6 +175,50 @@ $('#toolLibrary').on('click', '.tool-measure', function () {
     console.log('running &tool = ' + toolNumber + ' \n C72')
     fabmo.runSBP('&tool = ' + toolNumber + ' \n C72');
 });
+
+/// Show the popup bar when Add Tool is clicked
+$('#addToolBtn').on('click', function () {
+    $('#newToolNumber').val('');
+    $('#toolPopupBar').slideDown();
+    $('#newToolNumber').focus();
+});
+
+// Cancel the add
+$('#cancelAddTool').on('click', function () {
+    $('#toolPopupBar').slideUp();
+});
+
+// Confirm and add the tool row
+$('#confirmAddTool').on('click', function () {
+    const toolNumber = $('#newToolNumber').val().trim();
+    console.log('adding tool number ' + toolNumber)
+    if (toolNumber === '' || isNaN(toolNumber)) {
+        console.log('tool number is NaN')
+        alert('Please enter a valid tool number.');
+        return;
+    }
+
+    // Check if tool number already exists
+    if (variables.TOOLS && variables.TOOLS[toolNumber]) {
+        console.log('tool number already exists')
+        alert('A tool with this number already exists!');
+        return;
+    }
+
+    // Append a new row with the specified tool number
+    const newRow = `
+    <tr>
+      <td>${toolNumber}</td>
+      <td><input class="tool-description" data-tool="${toolNumber}" type="text" value="Enter tool description..."></td>
+      <td><a class="button radius small tool-load" style="padding:10px" data-tool="${toolNumber}">Load</a></td>
+      <td><a class="button radius small tool-measure" style="padding:10px" data-tool="${toolNumber}">Measure</a></td>
+    </tr>
+  `;
+    $('#toolLibrary tbody').append(newRow);
+    console.log('row appended')
+    $('#toolPopupBar').slideUp();
+});
+
 
 $('#fixedZZLoc').on('change', function (e) {
     if ($('#fixedZZLoc').prop('checked')) {
