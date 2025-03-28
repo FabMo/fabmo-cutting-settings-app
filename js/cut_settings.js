@@ -164,40 +164,6 @@ $('#toolLibrary').on('change', '.tool-description', function (e) {
     })
 });
 
-function InstallMacro (numMacro) {
-    var sbp_macro = "";
-    var source_folder = "/files/Macro ";
-    var source_data = source_folder + numMacro + ".sbp";
-    jQuery.get(source_data, function(data) {
-        sbp_macro += data;
-      })
-      .done(function() {
-        source_data = source_data.replace(source_folder, '');
-        source_data = source_data.replace('.sbp', '');
-        var macro = {};
-        macro.id = source_data;
-        macro.content = sbp_macro;
-  
-      console.log("id: ", macro.id );
-  
-        // create the macro with id macro.id
-         fabmo.updateMacro(macro.id,{},function(err, result) {
-         // sett the macro fields (name, description,content);
-        });
-    });
-  }
-
-$('#installMacros').on('click', function () {
-    InstallMacro(3);
-    InstallMacro(9);
-    InstallMacro(70);
-    InstallMacro(71);
-    InstallMacro(72);
-    InstallMacro(73);
-    InstallMacro(74);
-    InstallMacro(75);
-});
-
 $('#toolLibrary').on('click', '.tool-load', function () {
     var toolNumber = $(this).data('tool');
     console.log('running &tool = ' + toolNumber + ' \n C9')
