@@ -35,11 +35,11 @@ updateStoredConfig(function (data) {
     updateStatus();
     console.log("Machine Profile is " + data.engine.profile)
     var machineType = data.engine.profile
-    if (machineType == 'ShopBot Desktop ATC'){
+    if (machineType == 'ShopBot Desktop ATC') {
         document.getElementById('atcSetup').removeAttribute('hidden');
         document.getElementById('atcChangeSettings').removeAttribute('hidden');
     }
-    if (machineType == 'ShopBot Desktop' || machineType == 'ShopBot Desktop Max'){
+    if (machineType == 'ShopBot Desktop' || machineType == 'ShopBot Desktop Max') {
         document.getElementById('mtcChangeSettings').removeAttribute('hidden');
     }
     var imageDir = './files/' + machineType + '.jpg'
@@ -146,7 +146,7 @@ $('#toolLibrary').on('change', '.tool-description', function (e) {
         if (newDescription != undefined) {
             if (newDescription.length > 0) {
                 var sbp = '$TOOLS[' + toolNumber + '].NAME = "' + newDescription + '" '
-                if (!variables[toolNumber]) {
+                if (!variables['TOOLS'][toolNumber]) {
                     sbp += '\n $TOOLS[' + toolNumber + '].H = -5.000'
                     sbp += '\n $TOOLS[' + toolNumber + '].X = 0'
                     sbp += '\n $TOOLS[' + toolNumber + '].Y = 0'
@@ -219,14 +219,39 @@ $('#confirmAddTool').on('click', function () {
     $('#toolPopupBar').slideUp();
 });
 
+// Watch all input and checkbox elements EXCEPT inside #toolLibrary
+$('input, select, textarea').not('#toolLibrary *').on('change', function () {
+    const $input = $(this);
 
-$('#fixedZZLoc').on('change', function (e) {
-    if ($('#fixedZZLoc').prop('checked')) {
-        $('#zzXLoc').prop('disabled', false);
-        $('#zzYLoc').prop('disabled', false);
+    // Get the data-address (if any)
+    const address = $input.data('address') || '(no address)';
+
+    let value;
+
+    if ($input.attr('type') === 'checkbox') {
+        value = $input.prop('checked') ? 1 : 0;
     } else {
-        $('#zzXLoc').prop('disabled', true);
-        $('#zzYLoc').prop('disabled', true);
+        value = $input.val();
+    }
+    $input.addClass("flash-green");
+    setTimeout(() => $input.removeClass("flash-green"), 500);
+    console.log(`Changed input at [${address}]: ${value}`);
+
+    // ⬇️ Call your own handler function here
+    var varname = '$' + address.split('.')[address.split('.').length - 1]
+    var sbp = varname + ' = ' + value
+    console.log(sbp)
+    fabmo.runSBP(varname + ' = ' + value)
+});
+
+$('#sb_useZZeroLoc').on('change', function (e) {
+    if ($('#sb_useZZeroLoc').prop('checked')) {
+        console.log('trying to show fields...')
+        $('#sb_zZeroLocX').prop('disabled', false);
+        $('#sb_zZeroLocY').prop('disabled', false);
+    } else {
+        $('#sb_zZeroLocX').prop('disabled', true);
+        $('#sb_zZeroLocY').prop('disabled', true);
     }
 })
 
