@@ -5,12 +5,28 @@
     <title>Configuration</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../css/dashboard.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/tips.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/tips.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        legend {
+            font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+            background:transparent
+        }
+
+        fieldset {
+            color: #000000;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-size: 1.5em;
+            background:#ffffff
+        }
+    </style>
 </head>
 
-<body>
+<body style="background:#ffffff">
     <!-- Tool tip stand-in -->
     <div class="tip-output"><span class="tip-text"></span>
         <div class='commentBox'></div>
@@ -286,9 +302,13 @@
                                         Toolchanges<span class="tooltip tooltip-below">i<span
                                                 class="tooltiptext">Checking this box will cause your machine skip
                                                 all toolchanges encountered in the file</span></span></label>
-                                    <label><input id="atcSemiAuto" class="machine-input" type="checkbox" unchecked> Semi-Auto
+                                    <label><input id="atcSemiAuto" class="machine-input" type="checkbox" unchecked>
+                                        Semi-Auto
                                         Toolchanges<span class="tooltip tooltip-below">i<span
-                                                class="tooltiptext">Checking this box will cause the machine to stop and request the user to manually insert the tool holder when a toolchange is called, bit lengths will still be automatically set.</span></span></label>
+                                                class="tooltiptext">Checking this box will cause the machine to stop and
+                                                request the user to manually insert the tool holder when a toolchange is
+                                                called, bit lengths will still be automatically
+                                                set.</span></span></label>
                                 </div>
                             </div>
                         </fieldset>
@@ -298,7 +318,7 @@
         </div>
     </div>
     <script src="./js/jquery.min.js"></script>
-    <script src="./js/fabmo.js"></script>
+    <script src="../../../static/js/libs/fabmo.js"></script>
     <script src="./js/cut_settings.js"></script>
 </body>
 
