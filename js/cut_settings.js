@@ -248,6 +248,7 @@ $('input, select, textarea').not('#toolLibrary *').on('change', function () {
             fabmo.notify('error','settings changes not allowed while machine is in motion.')
         }else{
             console.log("SBP run completed. Result:", result);
+            fabmo.notify('success', varname + ' updated to ' + value)
         }
         });
 });
