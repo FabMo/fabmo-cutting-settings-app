@@ -91,7 +91,7 @@ function updateStatus() {
     updateStoredConfig(function (data) {
         var variables = data.opensbp.variables
         console.log(variables)
-        if (variables['ATC']['TOOLIN']) {
+        if (variables['ATC'] && variables['ATC']['TOOLIN']) {
             var toolIn = variables['ATC']['TOOLIN']
             var toolDescription = variables['TOOLS'][toolIn]['NAME']
             console.log('tooldesc = ' + toolDescription)
@@ -122,6 +122,16 @@ function populateToolLibrary() {
     `;
                 $('#toolLibrary tbody').append(row);
             });
+        } else {
+        var row = `
+        <tr>
+            <td>0</td>
+            <td><input class="tool-description" data-tool="0" type="text" value="Empty"></td>
+            <td><a class="button radius small tool-load" style="padding:10px" data-tool="0">Load</a></td>
+            <td><a class="button radius small tool-measure" style="padding:10px" data-tool="0">Measure</a></td>
+        </tr>
+        `;
+                    $('#toolLibrary tbody').append(row);
         }
     })
 }
