@@ -241,7 +241,15 @@ $('input, select, textarea').not('#toolLibrary *').on('change', function () {
     var varname = '$' + address.split('.')[address.split('.').length - 1]
     var sbp = varname + ' = ' + value
     console.log(sbp)
-    fabmo.runSBP(varname + ' = ' + value)
+
+    fabmo.runSBP(varname + ' = ' + value, function(err, result){
+        if (err) {
+            console.error("SBP run failed:", err);
+            fabmo.notify('error','settings changes not allowed while machine is in motion.')
+        }else{
+            console.log("SBP run completed. Result:", result);
+        }
+        });
 });
 
 $('#sb_useZZeroLoc').on('change', function (e) {
