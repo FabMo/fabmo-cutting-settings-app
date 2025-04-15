@@ -309,7 +309,7 @@ $('.delete').click(function () {
 });
 
 $('#btn-setHome').click(function () {
-    $.get('./files/offset.sbp', function (data) {
+    $.get('../files/offset.sbp', function (data) {
         var file = data.toString();
         fabmo.runSBP(file);
     })
