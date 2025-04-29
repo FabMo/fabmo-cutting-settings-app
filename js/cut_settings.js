@@ -56,6 +56,9 @@ updateStoredConfig(function (data) {
     if (!variables['$sb_zZeroLocY']) {
         variableInitCode += '$sb_zZeroLocY = 0 \n '
     }
+    if (!variables['$SB_HOMEOFF_X']) {
+        variableInitCode += 'C201 \n '
+    }
     if (variableInitCode != '') {
         fabmo.runSBP(variableInitCode);
     }
