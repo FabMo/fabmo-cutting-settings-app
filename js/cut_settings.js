@@ -47,16 +47,16 @@ updateStoredConfig(function (data) {
     $('#machineImage1').attr('src', imageDir)
     $('#machineImage2').attr('src', imageDir)
     var variableInitCode = ''
-    if (!variables['$sb_useZZeroLoc']) {
+    if (!variables['sb_useZZeroLoc']) {
         variableInitCode += '$sb_useZZeroLoc = 0 \n '
     }
-    if (!variables['$sb_zZeroLocX']) {
+    if (!variables['sb_zZeroLocX']) {
         variableInitCode += '$sb_zZeroLocX = 0 \n '
     }
-    if (!variables['$sb_zZeroLocY']) {
+    if (!variables['sb_zZeroLocY']) {
         variableInitCode += '$sb_zZeroLocY = 0 \n '
     }
-    if (!variables['$SB_HOMEOFF_X']) {
+    if (!variables['SB_HOMEOFF_X']) {
         variableInitCode += 'C201 \n '
     }
     if (variableInitCode != '') {
