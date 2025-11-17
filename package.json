@@ -1,13 +1,13 @@
 {
   "name": "Cutting Settings",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "description": "Set up your tool library and other cutting preferences",
   "author": "Brian Owen",
   "license": "MIT",
   "icon": "Icon.png",
   "icon_color": "#ffffff",
   "main": "./index.html",
-  "id": "preferences",
+  "id": "newPrefs",
   "devDependencies": {
     "autoprefixer": "^7.1.5",
     "babel-cli": "^6.26.0",
