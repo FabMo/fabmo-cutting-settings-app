@@ -33,44 +33,42 @@ var displayPrecision = 5;
  */
 function getUnitIndex(data) {
     // ── DEBUG: dump config keys so we can find the units field ──
-    if (data.opensbp) {
-        var sbpKeys = Object.keys(data.opensbp).filter(function(k) { return k !== 'variables'; });
-        console.log('[UU-DEBUG] opensbp config keys (excluding variables):', sbpKeys);
-        // Log all non-object values for inspection
-        sbpKeys.forEach(function(k) {
-            var v = data.opensbp[k];
-            if (typeof v !== 'object') {
-                console.log('[UU-DEBUG]   opensbp.' + k + ' =', v);
-            }
-        });
-    }
-    if (data.driver) {
-        console.log('[UU-DEBUG] driver config keys:', Object.keys(data.driver));
-        // Check G2 group 1 (system group) for gun setting
-        if (data.driver['1']) {
-            console.log('[UU-DEBUG]   driver[1] keys:', Object.keys(data.driver['1']));
-            console.log('[UU-DEBUG]   driver[1].gun =', data.driver['1'].gun);
-        }
-        if (data.driver.gun !== undefined) {
-            console.log('[UU-DEBUG]   driver.gun =', data.driver.gun);
-        }
-    }
-    if (data.machine) {
-        console.log('[UU-DEBUG] machine config keys:', Object.keys(data.machine));
-    }
+    // if (data.opensbp) {
+    //     var sbpKeys = Object.keys(data.opensbp).filter(function(k) { return k !== 'variables'; });
+    //     console.log('[UU-DEBUG] opensbp config keys (excluding variables):', sbpKeys);
+    //     sbpKeys.forEach(function(k) {
+    //         var v = data.opensbp[k];
+    //         if (typeof v !== 'object') {
+    //             console.log('[UU-DEBUG]   opensbp.' + k + ' =', v);
+    //         }
+    //     });
+    // }
+    // if (data.driver) {
+    //     console.log('[UU-DEBUG] driver config keys:', Object.keys(data.driver));
+    //     if (data.driver['1']) {
+    //         console.log('[UU-DEBUG]   driver[1] keys:', Object.keys(data.driver['1']));
+    //         console.log('[UU-DEBUG]   driver[1].gun =', data.driver['1'].gun);
+    //     }
+    //     if (data.driver.gun !== undefined) {
+    //         console.log('[UU-DEBUG]   driver.gun =', data.driver.gun);
+    //     }
+    // }
+    // if (data.machine) {
+    //     console.log('[UU-DEBUG] machine config keys:', Object.keys(data.machine));
+    // }
 
     // ── 1. OpenSBP config: check common field names ──
     if (data.opensbp) {
         var u = data.opensbp.units;
         if (u !== undefined) {
-            console.log('[UU-DEBUG] Found opensbp.units =', u);
+            // console.log('[UU-DEBUG] Found opensbp.units =', u);
             if (u === 'mm' || u === 1 || u === '1') return 1;
             if (u === 'in' || u === 0 || u === '0') return 0;
         }
         // Some FabMo versions might use 'unit' (singular)
         u = data.opensbp.unit;
         if (u !== undefined) {
-            console.log('[UU-DEBUG] Found opensbp.unit =', u);
+            // console.log('[UU-DEBUG] Found opensbp.unit =', u);
             if (u === 'mm' || u === 1 || u === '1') return 1;
             if (u === 'in' || u === 0 || u === '0') return 0;
         }
@@ -85,7 +83,7 @@ function getUnitIndex(data) {
             gun = data.driver.gun;
         }
         if (gun !== undefined) {
-            console.log('[UU-DEBUG] Found driver gun =', gun);
+            // console.log('[UU-DEBUG] Found driver gun =', gun);
             if (gun === 1) return 1;
             if (gun === 0) return 0;
         }
@@ -95,22 +93,22 @@ function getUnitIndex(data) {
     if (data.machine) {
         var mu = data.machine.units;
         if (mu !== undefined) {
-            console.log('[UU-DEBUG] Found machine.units =', mu);
+            // console.log('[UU-DEBUG] Found machine.units =', mu);
             if (mu === 'mm' || mu === 1) return 1;
             if (mu === 'in' || mu === 0) return 0;
         }
     }
 
-    console.warn('[UU-DEBUG] Could not determine unit index from config — defaulting to 0 (inches).');
-    console.warn('[UU-DEBUG] Check the [UU-DEBUG] logs above to identify where the unit setting lives.');
+    // console.warn('[UU-DEBUG] Could not determine unit index from config — defaulting to 0 (inches).');
+    // console.warn('[UU-DEBUG] Check the [UU-DEBUG] logs above to identify where the unit setting lives.');
     return 0;
 }
 
 updateStoredConfig(function (data) {
     unitIndex = getUnitIndex(data);
-    console.log('[UU-DEBUG] unitIndex resolved to:', unitIndex);
+    // console.log('[UU-DEBUG] unitIndex resolved to:', unitIndex);
     var variables = data.opensbp.variables;
-    console.log(variables);
+    // console.log(variables);
     populateToolLibrary();
     updateStatus();
     console.log("Machine Profile is " + data.engine.profile);
@@ -123,7 +121,7 @@ updateStoredConfig(function (data) {
         document.getElementById('mtcChangeSettings').removeAttribute('hidden');
     }
     var imageDir = './files/' + machineType + '.jpg';
-    console.log(imageDir);
+    // console.log(imageDir);
     $('#machineImage1').attr('src', imageDir);
     $('#machineImage2').attr('src', imageDir);
 
@@ -160,7 +158,7 @@ function updateStoredConfig(callback) {
                     displayPrecision = 5;
                 }
             }
-            console.log('[UU-DEBUG] displayPrecision:', displayPrecision);
+            // console.log('[UU-DEBUG] displayPrecision:', displayPrecision);
 
             $('[data-address]').each(function () {
                 const $el = $(this);
@@ -174,9 +172,9 @@ function updateStoredConfig(callback) {
                     if (uuProp) {
                         uuPath += '.' + uuProp;
                     }
-                    console.log('[UU-READ] ' + address + ' → path: ' + uuPath);
+                    // console.log('[UU-READ] ' + address + ' → path: ' + uuPath);
                     value = getValueByAddress(data, uuPath);
-                    console.log('[UU-READ]   value:', value);
+                    // console.log('[UU-READ]   value:', value);
                 } else {
                     value = getValueByAddress(data, address);
                 }
@@ -189,7 +187,7 @@ function updateStoredConfig(callback) {
                     $el.val(value);
                 }
             });
-            console.log('updated vars');
+            // console.log('updated vars');
             callback(data);
         }
     });
@@ -266,7 +264,7 @@ $('#toolLibrary').on('change', '.tool-description', function (e) {
         var variables = data.opensbp.variables;
         var toolNumber = $input.data('tool');
         var newDescription = escapeHtmlAttr($input.val());
-        console.log('$tools[' + toolNumber + '].NAME = ' + newDescription);
+        // console.log('$tools[' + toolNumber + '].NAME = ' + newDescription);
         if (newDescription != undefined) {
             if (newDescription.length > 0) {
                 var sbp = '$tools[' + toolNumber + '].NAME = "' + newDescription + '" ';
@@ -276,7 +274,7 @@ $('#toolLibrary').on('change', '.tool-description', function (e) {
                     sbp += '\n $toolsUU[' + toolNumber + '][].y = 0';
                     sbp += '\n $toolsUU[' + toolNumber + '][].z = 0';
                 }
-                console.log('[UU-WRITE] Tool SBP:', sbp);
+                // console.log('[UU-WRITE] Tool SBP:', sbp);
                 fabmo.runSBP(sbp);
                 $input.addClass("flash-green");
                 setTimeout(function () { $input.removeClass("flash-green"); }, 500);
@@ -291,13 +289,13 @@ $('#toolLibrary').on('change', '.tool-description', function (e) {
 
 $('#toolLibrary').on('click', '.tool-load', function () {
     var toolNumber = $(this).data('tool');
-    console.log('running &tool = ' + toolNumber + ' \n C9');
+    // console.log('running &tool = ' + toolNumber + ' \n C9');
     fabmo.runSBP('&tool = ' + toolNumber + ' \n C9');
 });
 
 $('#toolLibrary').on('click', '.tool-measure', function () {
     var toolNumber = $(this).data('tool');
-    console.log('running &tool = ' + toolNumber + ' \n C72');
+    // console.log('running &tool = ' + toolNumber + ' \n C72');
     fabmo.runSBP('&tool = ' + toolNumber + ' \n C72');
 });
 
@@ -313,15 +311,15 @@ $('#cancelAddTool').on('click', function () {
 
 $('#confirmAddTool').on('click', function () {
     const toolNumber = $('#newToolNumber').val().trim();
-    console.log('adding tool number ' + toolNumber);
+    // console.log('adding tool number ' + toolNumber);
     if (toolNumber === '' || isNaN(toolNumber)) {
-        console.log('tool number is NaN');
+        // console.log('tool number is NaN');
         alert('Please enter a valid tool number.');
         return;
     }
 
     if (variables.TOOLSUU && variables.TOOLSUU[toolNumber]) {
-        console.log('tool number already exists');
+        // console.log('tool number already exists');
         alert('A tool with this number already exists!');
         return;
     }
@@ -335,7 +333,7 @@ $('#confirmAddTool').on('click', function () {
     </tr>
   `;
     $('#toolLibrary tbody').append(newRow);
-    console.log('row appended');
+    // console.log('row appended');
     $('#toolPopupBar').slideUp();
 });
 
@@ -363,14 +361,14 @@ $('input, select, textarea').not('#toolLibrary *').on('change', function () {
         varname = '$' + address.split('.')[address.split('.').length - 1];
     }
     var sbp = varname + ' = ' + value;
-    console.log('[UU-WRITE] address:', address, 'sbpWrite:', sbpWrite, 'command:', sbp);
+    // console.log('[UU-WRITE] address:', address, 'sbpWrite:', sbpWrite, 'command:', sbp);
 
     fabmo.runSBP(sbp, function (err, result) {
         if (err) {
-            console.error("[UU-WRITE] SBP run failed:", err);
+            console.error("SBP run failed:", err);
             fabmo.notify('error', 'Settings changes not allowed while machine is in motion.');
         } else {
-            console.log("[UU-WRITE] SBP run completed. Result:", result);
+            // console.log("[UU-WRITE] SBP run completed. Result:", result);
             fabmo.notify('success', varname + ' updated to ' + value);
         }
     });
