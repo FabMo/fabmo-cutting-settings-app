@@ -1,6 +1,6 @@
 {
   "name": "Cutting Settings",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Set up your tool library and other cutting preferences",
   "author": "Brian Owen",
   "license": "MIT",
@@ -27,7 +27,9 @@
     "deploy": "npm run css-deploy && npm run js-build",
     "js-build": "babel _javascript --out-dir lib",
     "js-watch": "npm run js-build -- --watch",
-    "start": "npm run css-watch | npm run js-watch"
+    "start": "npm run css-watch | npm run js-watch",
+    "build": "powershell -ExecutionPolicy Bypass -File ./build.ps1",
+    "build:clean": "powershell -ExecutionPolicy Bypass -File ./build.ps1 -Clean"
   },
   "dependencies": {
     "font-awesome": "^4.7.0"

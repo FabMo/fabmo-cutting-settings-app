@@ -185,8 +185,10 @@
                                             <span class="tooltiptext">How far off your X-axis proximity switch to
                                                 set machine zero for X (default = .5in)</span></span></label>
                                     <div class="small-12 columns">
-                                        <input type="text" id="xOffset" class="xOffset"
-                                            data-address="opensbp.variables.SB_HOMEOFF_X" />
+                                    <input type="text" id="xOffset" class="xOffset"
+                                        data-address="opensbp.variables.SB_HOMEOFFUU"
+                                        data-uu="true" data-uu-prop="X"
+                                        data-sbp-write="sb_homeOffUU[].x" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -195,7 +197,9 @@
                                                 set machine zero for Y (default = .5in)</span></span></label>
                                     <div class="small-12 columns">
                                         <input type="text" id="yOffset" class="yOffset"
-                                            data-address="opensbp.variables.SB_HOMEOFF_Y" />
+                                            data-address="opensbp.variables.SB_HOMEOFFUU"
+                                            data-uu="true" data-uu-prop="Y"
+                                            data-sbp-write="sb_homeOffUU[].y" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -204,7 +208,9 @@
                                                 machine zero in X and Y (typically 2.5ips)</span></span></label>
                                     <div class="small-12 columns">
                                         <input type="text" id="homingSpeeds" class="homingSpeeds"
-                                            data-address="opensbp.variables.SB_SEARCHSPEED_XY" />
+                                            data-address="opensbp.variables.SB_SEARCHSPEEDUU"
+                                            data-uu="true" data-uu-prop="XY"
+                                            data-sbp-write="sb_searchSpeedUU[].xy" />
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +243,9 @@
                                                 (typically .118 for Standard ShopBot Plate)</span></span></label>
                                     <div class="small-12 columns">
                                         <input type="text" id="plateThick" class="plateThick"
-                                            data-address="opensbp.variables.SB_ZPLATETHICK" />
+                                            data-address="opensbp.variables.SB_ZPLATETHICKUU"
+                                            data-uu="true"
+                                            data-sbp-write="sb_zPlateThickUU[]" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -246,8 +254,9 @@
                                                 the z-zero plate (typically 0.5ips)</span></span></label>
                                     <div class="small-12 columns">
                                         <input type="text" id="zHomeSpeed" class="zHomeSpeed"
-                                            data-address="opensbp.variables.SB_SEARCHSPEED_Z" />
-                                    </div>
+                                            data-address="opensbp.variables.SB_SEARCHSPEEDUU"
+                                            data-uu="true" data-uu-prop="Z"
+                                            data-sbp-write="sb_searchSpeedUU[].z" />                                    </div>
                                 </div>
                             </div>
                             <div class="large-6 columns">
