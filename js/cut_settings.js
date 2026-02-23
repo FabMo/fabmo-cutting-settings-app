@@ -25,6 +25,19 @@ var unitIndex = 0;
 // Number of decimal places for display, from opensbp.variable_precision
 var displayPrecision = 5;
 
+// Track machine state so we can refresh displayed values whenever the machine
+// returns to idle (e.g. after a tool change, measure, or any macro).
+var lastMachineState = null;
+
+fabmo.on('status', function (status) {
+    var currentState = status.state;
+    // Refresh when machine transitions TO idle from any other state
+    if (currentState === 'idle' && lastMachineState && lastMachineState !== 'idle') {
+        updateStatus();
+    }
+    lastMachineState = currentState;
+});
+
 
 /**
  * Determine the current unit index from config data.
