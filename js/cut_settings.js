@@ -231,6 +231,7 @@ function populateToolLibrary() {
         var variables = data.opensbp.variables;
         if (variables['TOOLSUU']) {
             $.each(variables['TOOLSUU'], function (toolNumber, toolUUData) {
+                console.log('[ToolLib] toolNumber:', toolNumber, 'toolUUData:', JSON.stringify(toolUUData));
                 var toolName = '';
                 if (variables['TOOLS'] && variables['TOOLS'][toolNumber] && variables['TOOLS'][toolNumber]['NAME']) {
                     toolName = variables['TOOLS'][toolNumber]['NAME'];
@@ -238,12 +239,38 @@ function populateToolLibrary() {
                 var safeValue = escapeHtmlAttr(toolName) || '';
                 if (safeValue == '' || safeValue == 'undefined') { safeValue = 'Enter Tool Description...'; }
                 if (toolNumber == 0) { safeValue = 'Empty'; }
+
                 var row = `
     <tr>
         <td>${toolNumber}</td>
         <td><input class="tool-description" data-tool="${toolNumber}" type="text" value="${safeValue}"></td>
         <td><a class="button radius small tool-load" style="padding:10px" data-tool="${toolNumber}">Load</a></td>
         <td><a class="button radius small tool-measure" style="padding:10px" data-tool="${toolNumber}">Measure</a></td>
+        <td><button class="tool-settings-btn" data-tool="${toolNumber}" title="Tool settings"><i class="fa fa-wrench"></i></button></td>
+    </tr>
+    <tr class="tool-settings-row" data-tool="${toolNumber}" style="display:none">
+        <td colspan="5">
+            <div class="settings-inner">
+                <label>Clip X: <input class="tool-clip-x" data-tool="${toolNumber}" type="text"
+                    data-address="opensbp.variables.TOOLSUU.${toolNumber}"
+                    data-uu="true" data-uu-prop="X"
+                    data-sbp-write="toolsUU[${toolNumber}][].x"></label>
+                <label>Clip Y: <input class="tool-clip-y" data-tool="${toolNumber}" type="text"
+                    data-address="opensbp.variables.TOOLSUU.${toolNumber}"
+                    data-uu="true" data-uu-prop="Y"
+                    data-sbp-write="toolsUU[${toolNumber}][].y"></label>
+                <label>Clip Z: <input class="tool-clip-z" data-tool="${toolNumber}" type="text"
+                    data-address="opensbp.variables.TOOLSUU.${toolNumber}"
+                    data-uu="true" data-uu-prop="Z"
+                    data-sbp-write="toolsUU[${toolNumber}][].z"></label>
+                <label>Height: <input class="tool-height" data-tool="${toolNumber}" type="text"
+                    data-address="opensbp.variables.TOOLSUU.${toolNumber}"
+                    data-uu="true" data-uu-prop="H"
+                    data-sbp-write="toolsUU[${toolNumber}][].h"></label>
+                <button class="button tiny success tool-settings-save" data-tool="${toolNumber}">Save</button>
+                <button class="button tiny alert tool-settings-discard" data-tool="${toolNumber}">Discard</button>
+            </div>
+        </td>
     </tr>
     `;
                 $('#toolLibrary tbody').append(row);
@@ -255,6 +282,17 @@ function populateToolLibrary() {
             <td><input class="tool-description" data-tool="0" type="text" value="Empty"></td>
             <td><a class="button radius small tool-load" style="padding:10px" data-tool="0">Load</a></td>
             <td><a class="button radius small tool-measure" style="padding:10px" data-tool="0">Measure</a></td>
+            <td><button class="tool-settings-btn" data-tool="0" title="Tool settings"><i class="fa fa-wrench"></i></button></td>
+        </tr>
+        <tr class="tool-settings-row" data-tool="0" style="display:none">
+            <td colspan="5">
+                <div class="settings-inner">
+                    <label>Clip X: <input class="tool-clip-x" data-tool="0" type="text" value="0"></label>
+                    <label>Clip Y: <input class="tool-clip-y" data-tool="0" type="text" value="0"></label>
+                    <label>Clip Z: <input class="tool-clip-z" data-tool="0" type="text" value="0"></label>
+                    <label>Height: <input class="tool-height" data-tool="0" type="text" value="0"></label>
+                </div>
+            </td>
         </tr>
         `;
             $('#toolLibrary tbody').append(row);
@@ -310,6 +348,47 @@ $('#toolLibrary').on('click', '.tool-measure', function () {
     var toolNumber = $(this).data('tool');
     // console.log('running &tool = ' + toolNumber + ' \n C72');
     fabmo.runSBP('&tool = ' + toolNumber + ' \n C72');
+});
+
+// Toggle tool settings row
+$('#toolLibrary').on('click', '.tool-settings-btn', function () {
+    var toolNumber = $(this).data('tool');
+    var $settingsRow = $('.tool-settings-row[data-tool="' + toolNumber + '"]');
+    $settingsRow.toggle();
+});
+
+// Save all clip/height fields for a tool
+$('#toolLibrary').on('click', '.tool-settings-save', function () {
+    var toolNumber = $(this).data('tool');
+    var $row = $('.tool-settings-row[data-tool="' + toolNumber + '"]');
+    var sbpLines = [];
+
+    $row.find('input[data-sbp-write]').each(function () {
+        var $input = $(this);
+        var value = $input.val();
+        sbpLines.push('$' + $input.data('sbp-write') + ' = ' + value);
+    });
+
+    var sbp = sbpLines.join('\n');
+    fabmo.runSBP(sbp, function (err) {
+        if (err) {
+            console.error("SBP run failed:", err);
+            $row.find('input').addClass("flash-red");
+            setTimeout(function () { $row.find('input').removeClass("flash-red"); }, 500);
+        } else {
+            $row.find('input').addClass("flash-green");
+            setTimeout(function () { $row.find('input').removeClass("flash-green"); $row.hide(); }, 500);
+        }
+    });
+});
+
+// Discard changes — reload values from config and close
+$('#toolLibrary').on('click', '.tool-settings-discard', function () {
+    var toolNumber = $(this).data('tool');
+    var $row = $('.tool-settings-row[data-tool="' + toolNumber + '"]');
+    updateStoredConfig(function () {
+        $row.hide();
+    });
 });
 
 $('#addToolBtn').on('click', function () {

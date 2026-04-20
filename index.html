@@ -23,6 +23,42 @@
             font-size: 1.5em;
             background:#ffffff
         }
+
+        .tool-settings-btn {
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #555;
+            padding: 4px 8px;
+            border: none;
+            background: none;
+        }
+        .tool-settings-btn:hover {
+            color: #000;
+        }
+
+        .tool-settings-row td {
+            padding: 6px 10px;
+            background: #f8f8f8;
+            border-top: none;
+        }
+        .tool-settings-row .settings-inner {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 0.85em;
+        }
+        .tool-settings-row .settings-inner label {
+            margin: 0;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        .tool-settings-row .settings-inner input {
+            width: 80px;
+            margin: 0;
+            padding: 4px 6px;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 
@@ -119,6 +155,9 @@
                                                             <span class="tooltiptext">Click the "Measure" button next to
                                                                 a tool that you want to record a length
                                                                 for</span></span></th>
+                                                    <th><span class="tooltip tooltip-below">i
+                                                            <span class="tooltiptext">Click the wrench to view/edit clip
+                                                                location (X, Y, Z) and tool height</span></span></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -126,7 +165,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="3">
+                                                    <td colspan="5">
                                                         <button id="addToolBtn" class="button small">➕ Add Tool</button>
                                                     </td>
                                                 </tr>
